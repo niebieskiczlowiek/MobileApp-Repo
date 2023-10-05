@@ -7,3 +7,4 @@ The user can also explore information about the regions and types themselves, di
 
 +install newest version of node js
 +npm install @expo/ngrok@^4.1.0
++npm i axios axios-cache-interceptor pokenode-ts
