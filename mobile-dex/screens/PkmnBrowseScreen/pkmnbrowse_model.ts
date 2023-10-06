@@ -3,16 +3,8 @@ import { NamedAPIResource, NamedAPIResourceList, PokemonClient } from 'pokenode-
 const getPokemonList = async (): Promise<NamedAPIResource[]> => {
     const api = new PokemonClient();
 
-    // await api
-    //     .getPokemonByName(name)
-    //     .then((data) => {
-    //         return data.name
-    //     })
-    //     .catch((error) => console.error(error));
-
     try {
-        const data = await api.listPokemons(0, 200);
-        // setFunction( {data} )
+        const data = await api.listPokemons(0, 1000);
         return data.results
     } catch (error) {
         console.error(error);

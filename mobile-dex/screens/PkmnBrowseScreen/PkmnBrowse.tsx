@@ -10,7 +10,7 @@ const PkmnBrowse: React.FC = () => {
     const pokemonListHandler = async () => {
         try {
             const data = await getPokemonList();
-            console.log("data type", typeof data)
+            console.log("data type", data)
             setPokemonList(data)
         } catch (error) {
             console.error(error);
@@ -18,17 +18,21 @@ const PkmnBrowse: React.FC = () => {
         }
     }
 
+    const extractPokemonNum = (url: string):string => {
+        const pokemonNum = url.split("/")[6];
+        return pokemonNum
+    }
+
     React.useEffect(() => {
         pokemonListHandler();
-        console.log(pokemonList)
     }, []);
 
     return (
         <ScrollView>
             {pokemonList.map((pokemon) => {
                 return (
-                    <View key={pokemon.name}>
-                        <Text>{ pokemon.name }</Text>
+                    <View key={ extractPokemonNum(pokemon.url) }>
+                        <Text>{ pokemon.name } {extractPokemonNum(pokemon.url)}</Text>
                     </View>
                 )
             })}

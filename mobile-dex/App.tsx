@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 // components
-import PkmnBrowse from './components/PkmnBrowseScreen/PkmnBrowse';
+import PkmnBrowse from './screens/PkmnBrowseScreen/PkmnBrowse';
 
 const Stack = createStackNavigator();
 
