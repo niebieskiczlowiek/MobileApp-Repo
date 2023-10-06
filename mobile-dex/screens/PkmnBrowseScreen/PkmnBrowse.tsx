@@ -4,6 +4,9 @@ import { Text, View, ScrollView } from 'react-native';
 import getPokemonList from './pkmnbrowse_model'
 import { NamedAPIResource } from 'pokenode-ts';
 
+// components
+import PkmnListBlock from '../../components/pokemonListBlock/PkmnListBlock';
+
 const PkmnBrowse: React.FC = () => {
     const [pokemonList, setPokemonList] = React.useState<NamedAPIResource[]>([]);
 
@@ -32,7 +35,7 @@ const PkmnBrowse: React.FC = () => {
             {pokemonList.map((pokemon) => {
                 return (
                     <View key={ extractPokemonNum(pokemon.url) }>
-                        <Text>{ pokemon.name } {extractPokemonNum(pokemon.url)}</Text>
+                        <PkmnListBlock pkmnNum={extractPokemonNum(pokemon.url)} pkmnName={pokemon.name} />
                     </View>
                 )
             })}
