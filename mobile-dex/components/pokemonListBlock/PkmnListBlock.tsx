@@ -11,12 +11,13 @@ const PkmnListBlock: React.FC<pkmnListBlockType> = (props) => {
     const [pokemonName, setPokemonName] = React.useState<string>();
 
     const { pkmnNum } = props;
-    const { pkmnName } = props;
+    let { pkmnName } = props;
 
     const pokemonNumHandler = () => {
         setPokemonNum( pkmnNum );
     }
     const pokemonNameHandler = () => {
+        pkmnName = pkmnName[0].toUpperCase() + pkmnName.slice(1);
         setPokemonName( pkmnName );
     }
 
