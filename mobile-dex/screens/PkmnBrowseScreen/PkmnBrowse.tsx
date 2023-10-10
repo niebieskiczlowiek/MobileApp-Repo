@@ -10,7 +10,7 @@ import PkmnListBlock from '../../components/pokemonListBlock/PkmnListBlock';
 const PkmnBrowse: React.FC = () => {
     const [pokemonList, setPokemonList] = React.useState<NamedAPIResource[]>([])
 
-    const pokemonListHandler = async () => {
+    const pokemonListHandler = async (): Promise<void> => {
         try {
             const data = await getPokemonList()
             console.log("data type", data)
@@ -21,8 +21,8 @@ const PkmnBrowse: React.FC = () => {
         }
     }
 
-    const extractPokemonNumFromUrl = (url: string):string => {
-        const pokemonNum = url.split("/")[6]
+    const extractPokemonNumFromUrl = (url: string): number => {
+        let pokemonNum: number = parseInt(url.split("/")[6]);
         return pokemonNum
     }
 

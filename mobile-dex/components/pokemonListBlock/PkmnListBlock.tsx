@@ -2,21 +2,21 @@ import * as React from 'react';
 import { Text, View } from 'react-native';
 
 type pkmnListBlockType = {
-    pkmnNum: string,
+    pkmnNum: number,
     pkmnName: string,
 }
 
 const PkmnListBlock: React.FC<pkmnListBlockType> = (props) => {
-    const [pokemonNum, setPokemonNum] = React.useState<string>();
+    const [pokemonNum, setPokemonNum] = React.useState<number>();
     const [pokemonName, setPokemonName] = React.useState<string>();
 
     const { pkmnNum } = props;
     let { pkmnName } = props;
 
-    const pokemonNumHandler = () => {
+    const pokemonNumHandler = (): void => {
         setPokemonNum( pkmnNum );
     }
-    const pokemonNameHandler = () => {
+    const pokemonNameHandler = (): void => {
         pkmnName = pkmnName[0].toUpperCase() + pkmnName.slice(1);
         setPokemonName( pkmnName );
     }
