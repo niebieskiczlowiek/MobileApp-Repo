@@ -8,3 +8,6 @@ The user can also explore information about the regions and types themselves, di
 +install newest version of node js
 +npm install @expo/ngrok@^4.1.0
 +npm i axios axios-cache-interceptor pokenode-ts
++npm i @react-navigation/native
++npm i @react-navigation/native-stack
++npm install react-native-navigation << to jest chyba dobre xD
