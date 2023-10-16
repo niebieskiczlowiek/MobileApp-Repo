@@ -1,14 +1,21 @@
 import * as React from 'react'
-import { Text, View, ScrollView } from 'react-native'
+import { Text, View, ScrollView, Pressable, GestureResponderEvent } from 'react-native'
 
 import getPokemonList from './pkmnbrowse_model'
 import { NamedAPIResource } from 'pokenode-ts'
 
 // components
 import PkmnListBlock from '../../components/pokemonListBlock/PkmnListBlock';
+import { GestureDirection } from '@react-navigation/stack/lib/typescript/src/types';
 
-const PkmnBrowse: React.FC = () => {
+type PkmnBrowseScreenPorps = {
+    navigation: any,
+}
+
+const PkmnBrowse: React.FC<PkmnBrowseScreenPorps> = (props) => {
     const [pokemonList, setPokemonList] = React.useState<NamedAPIResource[]>([])
+
+    const navigation = props.navigation
 
     const pokemonListHandler = async (): Promise<void> => {
         try {
@@ -26,6 +33,10 @@ const PkmnBrowse: React.FC = () => {
         return pokemonNum
     }
 
+    const navigateToPokemonScreen = (name: string): void => {
+        navigation.navigate('PokemonDetails', { name })
+    }
+
     React.useEffect(() => {
         pokemonListHandler()
     }, []);
@@ -34,8 +45,22 @@ const PkmnBrowse: React.FC = () => {
         <ScrollView>
             {pokemonList.map((pokemon) => {
                 return (
+                    // <Pressable key={ extractPokemonNumFromUrl(pokemon.url) }
+                    //     onPress={() => {
+                    //         navigateToPokemonScreen(pokemon.name)
+                    //     }}
+                    // >
+                    //     <PkmnListBlock pkmnNum={extractPokemonNumFromUrl(pokemon.url)} pkmnName={pokemon.name} />
+                    // </Pressable>
                     <View key={ extractPokemonNumFromUrl(pokemon.url) }>
-                        <PkmnListBlock pkmnNum={extractPokemonNumFromUrl(pokemon.url)} pkmnName={pokemon.name} />
+                        <PkmnListBlock 
+                            pkmnNum={extractPokemonNumFromUrl(pokemon.url)}
+                            pkmnName={pokemon.name}
+
+                            pressFunction={() => {
+                                navigateToPokemonScreen(pokemon.name)
+                            }}
+                        />
                     </View>
                 )
             })}

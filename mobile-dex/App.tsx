@@ -6,6 +6,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 // components
 import PkmnBrowse from './screens/PkmnBrowseScreen/PkmnBrowse';
+import PkmnDetails from './screens/PkmnDetails/PkmnDetails';
 
 const Stack = createStackNavigator();
 
@@ -13,7 +14,8 @@ const App: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Pokemon" component={PkmnBrowse}/>
+        <Stack.Screen name="PokemonList" component={PkmnBrowse} initialParams={{}} />
+        <Stack.Screen name="PokemonDetails" component={PkmnDetails}  initialParams={{}} />
       </Stack.Navigator>
     </NavigationContainer>
   );

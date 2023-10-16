@@ -1,9 +1,13 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Pressable } from 'react-native';
+
+// styles
+import styles from './styles';
 
 type pkmnListBlockType = {
     pkmnNum: number,
     pkmnName: string,
+    pressFunction: () => void,
 }
 
 const PkmnListBlock: React.FC<pkmnListBlockType> = (props) => {
@@ -27,9 +31,9 @@ const PkmnListBlock: React.FC<pkmnListBlockType> = (props) => {
     }, []);
 
     return (
-        <View>
+        <Pressable onPress = { props.pressFunction } style={styles.block} >
             <Text>#{ pokemonNum } { pokemonName }</Text>
-        </View>
+        </Pressable>
     )
 }
 
