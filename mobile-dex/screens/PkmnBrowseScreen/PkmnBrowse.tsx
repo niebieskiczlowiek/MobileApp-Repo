@@ -6,7 +6,6 @@ import { NamedAPIResource } from 'pokenode-ts'
 
 // components
 import PkmnListBlock from '../../components/pokemonListBlock/PkmnListBlock';
-import { GestureDirection } from '@react-navigation/stack/lib/typescript/src/types';
 
 type PkmnBrowseScreenPorps = {
     navigation: any,
@@ -33,8 +32,8 @@ const PkmnBrowse: React.FC<PkmnBrowseScreenPorps> = (props) => {
         return pokemonNum
     }
 
-    const navigateToPokemonScreen = (name: string): void => {
-        navigation.navigate('PokemonDetails', { name })
+    const navigateToPokemonScreen = (name: string, id: number): void => {
+        navigation.navigate('PokemonDetails', { name, id })
     }
 
     React.useEffect(() => {
@@ -58,7 +57,7 @@ const PkmnBrowse: React.FC<PkmnBrowseScreenPorps> = (props) => {
                             pkmnName={pokemon.name}
 
                             pressFunction={() => {
-                                navigateToPokemonScreen(pokemon.name)
+                                navigateToPokemonScreen(pokemon.name, extractPokemonNumFromUrl(pokemon.url))
                             }}
                         />
                     </View>
