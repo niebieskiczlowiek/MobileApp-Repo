@@ -19,7 +19,6 @@ const PkmnBrowse: React.FC<PkmnBrowseScreenPorps> = (props) => {
     const pokemonListHandler = async (): Promise<void> => {
         try {
             const data = await getPokemonList()
-            console.log("data type", data)
             setPokemonList(data)
         } catch (error) {
             console.error(error)
