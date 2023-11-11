@@ -1,16 +1,19 @@
 import * as React from 'react'
-import {View, Text, ScrollView, Pressable} from 'react-native';
-
+import {View, Text, ScrollView, Pressable, Modal } from 'react-native';
 // styles
 import styles from './pokemonDetails_styles';
 
 // types
-import PokemonSpecies from './pkmnspecies_type';
-import Pokemon from './pokemon_type';
+import PokemonSpecies from '../../types/pkmnspecies_type';
+import Pokemon from '../../types/pokemon_type';
 
 // model 
 import {getPokemonDetails, getPokemonSpeciesById, getPokemonById} from './pkmndetails_model'
 import { APIResource } from 'pokenode-ts';
+
+// components
+import PokemonFormInfo from '../../components/pokemonFormInfo/PokemonFormInfo';
+import PokemonFormSelect from '../../components/pokemonFormSelect/PokemonFormSelect';
 
 type PkmnDetailsScreenProps = {
     route: any;
@@ -24,6 +27,9 @@ const PkmnDetails: React.FC<PkmnDetailsScreenProps> = ({ route }) => {
 
     const [nextPokemon, setNextPokemon] = React.useState<string | null>(null) // next species in the dex
     const [previousPokemon, setPreviousPokemon] = React.useState<string | null>(null) // previous species in the dex
+
+    const [formsModalVisible, setFormsModalVisible] = React.useState<boolean>(false);
+
     const { name, id } = route.params
 
     const extractPokemonNumFromUrl = (url: string): number => {
@@ -31,12 +37,13 @@ const PkmnDetails: React.FC<PkmnDetailsScreenProps> = ({ route }) => {
         return pokemonNum
     }
 
+
     const displayedPokemonHandler = async (speciesName: string): Promise<number> => {
         try {
             const data = await getPokemonDetails(speciesName) // gets pokemon species info 
             setDisplayedPokemon(data)
-            return extractPokemonNumFromUrl(data.varieties[0].pokemon.url)
             
+            return extractPokemonNumFromUrl(data.varieties[0].pokemon.url)
         } catch (error) {
             console.error(error)
             throw error
@@ -101,28 +108,51 @@ const PkmnDetails: React.FC<PkmnDetailsScreenProps> = ({ route }) => {
 
     return (
         <ScrollView>
+            <Modal
+                visible={formsModalVisible} 
+                onRequestClose={() => {
+                    setFormsModalVisible(false)
+                  }}>
+                <View>
+                    
+                    <Text>Other forms:</Text>
+
+                    {displayedPokemon !== null && currentForm !== null 
+                        ? (
+                            <PokemonFormSelect 
+                            displayedPokemonSpecies={displayedPokemon} 
+                            currentForm={currentForm} 
+                            updateCurrentForm={(form: Pokemon) => {
+                                setCurrentForm(form)
+                            }}
+                            closeFormModal={() => {
+                                setFormsModalVisible(false)
+                            }}
+                            />
+                        )
+                        : (
+                            <Text>Loading...</Text>
+                        ) 
+                    }
+
+                    <Pressable
+                        style={styles.button}
+                        onPress={() => setFormsModalVisible(false)}>
+                        <Text>Hide Modal</Text>
+                    </Pressable>
+                </View>
+            </Modal>
+
+
             <View style={styles.top_container}>
                 <Text>XDD</Text>
             </View>
 
             {displayedPokemon !== null && currentForm !== null ? (
                 <View style={styles.bottom_container}>
-                    <Text>Other forms:</Text>
-                    {displayedPokemon.varieties.map((variety) =>{
-                        return (
-                            <View key={ extractPokemonNumFromUrl(variety.pokemon.url) }>
-                                <Pressable onPress={() => {
-                                    currentFormHandler(extractPokemonNumFromUrl(variety.pokemon.url))
-                                }} 
-                                style={styles.form_button}>
-                                    <Text>{variety.pokemon.name}</Text>
-                                </Pressable>
-                            </View>
-                        )
-                    })}
+
+                    <PokemonFormInfo pokemonForm={currentForm} />
                     
-                    <Text>Current Form:</Text>
-                    <Text>{currentForm.name}</Text>
                     <Text>{displayedPokemon.pokedex_numbers[0].entry_number}</Text>
                     <Text>{ displayedPokemon.generation.url.split("/").reverse()[2] + displayedPokemon.generation.url.split("/").reverse()[1] }</Text>
                     
@@ -137,6 +167,15 @@ const PkmnDetails: React.FC<PkmnDetailsScreenProps> = ({ route }) => {
                     ) : (
                         <Text>next ...</Text>
                     )}
+
+                    <Pressable
+                        style={styles.button}
+                        onPress={() => {
+                            setFormsModalVisible(true)
+                        }}
+                    >
+                        <Text>Show forms</Text>
+                    </Pressable>
 
                 </View>
                 ) : (

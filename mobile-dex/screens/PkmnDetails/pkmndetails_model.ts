@@ -1,7 +1,7 @@
 import { NamedAPIResource, NamedAPIResourceList, PokemonClient } from 'pokenode-ts'
 
-import PokemonSpecies from './pkmnspecies_type'
-import Pokemon from './pokemon_type'
+import PokemonSpecies from '../../types/pkmnspecies_type'
+import Pokemon from '../../types/pokemon_type'
 
 
 export const getPokemonDetails = async (speciesName: string): Promise<PokemonSpecies> => {
