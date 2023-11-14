@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, Pressable} from 'react-native';
 
 // type
 import Pokemon from '../../types/pokemon_type';
@@ -12,11 +12,22 @@ type pokemonSpriteType = {
 }
 
 const PokemonSprite: React.FC<pokemonSpriteType> = (props) => {
-    const [pokemonSprite, setPokemonSprite] = React.useState<string | null >();
+    const [pokemonSprite, setPokemonSprite] = React.useState<string | null >()
+    const [pokemonSpriteFlipped, setPokemonSpriteFlipped] = React.useState<boolean>(false);
 
     const pokemonSpriteHandler = (pokemon: Pokemon) => {
-        const pokemonSprite = pokemon.sprites.front_default
+        let pokemonSprite: string | null;
+        if (pokemonSpriteFlipped) {
+            pokemonSprite = pokemon.sprites.back_default
+        } else {
+            pokemonSprite = pokemon.sprites.front_default
+        }
+
         setPokemonSprite(pokemonSprite)
+    }
+
+    const switchSpriteView = () => {
+        setPokemonSpriteFlipped(!pokemonSpriteFlipped)
     }
 
     React.useEffect(() => {
@@ -28,11 +39,17 @@ const PokemonSprite: React.FC<pokemonSpriteType> = (props) => {
             {pokemonSprite !== null 
                 ? (
                     <View style={styles.sprite_container}>
-                        <Image
-                            style={styles.sprite}
-                            source={{uri: pokemonSprite}}
-                            onError={(error) => console.error('Error loading image:', error)}
-                        />
+                        <Pressable
+                            onPress={() => {
+                                switchSpriteView()
+                            }}
+                        >
+                            <Image
+                                style={styles.sprite}
+                                source={{uri: pokemonSprite}}
+                                onError={(error) => console.error('Error loading image:', error)}
+                            />
+                        </Pressable>
                     </View>
                 )
                 : (
