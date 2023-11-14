@@ -1,19 +1,19 @@
 import * as React from 'react'
-import {View, Text, ScrollView, Pressable, Modal } from 'react-native';
+import {View, Text, ScrollView, Pressable, Modal } from 'react-native'
 // styles
-import styles from './pokemonDetails_styles';
+import styles from './pokemonDetails_styles'
 
 // types
 import PokemonSpecies from '../../types/pkmnspecies_type';
-import Pokemon from '../../types/pokemon_type';
+import Pokemon from '../../types/pokemon_type'
 
 // model 
 import {getPokemonDetails, getPokemonSpeciesById, getPokemonById} from './pkmndetails_model'
-import { APIResource } from 'pokenode-ts';
 
 // components
-import PokemonFormInfo from '../../components/pokemonFormInfo/PokemonFormInfo';
-import PokemonFormSelect from '../../components/pokemonFormSelect/PokemonFormSelect';
+import PokemonFormInfo from '../../components/pokemonFormInfo/PokemonFormInfo'
+import PokemonFormSelect from '../../components/pokemonFormSelect/PokemonFormSelect'
+import PokemonSprite from '../../components/pokemonSprite/PokemonSprite'
 
 type PkmnDetailsScreenProps = {
     route: any;
@@ -22,21 +22,18 @@ type PkmnDetailsScreenProps = {
 
 const PkmnDetails: React.FC<PkmnDetailsScreenProps> = ({ route }) => {
     const [displayedPokemon, setDisplayedPokemon] = React.useState<PokemonSpecies | null>(null) // current species
-    const [speciesForms, setSpeciesForms] = React.useState<Object[] | null>(null) // other forms of the species
     const [currentForm, setCurrentForm] = React.useState<Pokemon | null> (null)
-
     const [nextPokemon, setNextPokemon] = React.useState<string | null>(null) // next species in the dex
     const [previousPokemon, setPreviousPokemon] = React.useState<string | null>(null) // previous species in the dex
 
     const [formsModalVisible, setFormsModalVisible] = React.useState<boolean>(false);
 
-    const { name, id } = route.params
+    const { name, id } = route.params // name and Id of displayed species
 
     const extractPokemonNumFromUrl = (url: string): number => {
         let pokemonNum: number = parseInt(url.split("/")[6]);
         return pokemonNum
     }
-
 
     const displayedPokemonHandler = async (speciesName: string): Promise<number> => {
         try {
@@ -145,8 +142,18 @@ const PkmnDetails: React.FC<PkmnDetailsScreenProps> = ({ route }) => {
 
 
             <View style={styles.top_container}>
-                <Text>XDD</Text>
+                {displayedPokemon !== null && currentForm !== null
+                    ? (
+                        <PokemonSprite pokemonForm={currentForm} />
+                    )
+                    : (
+                        <View>
+                            <Text>Loading ... </Text>
+                        </View>
+                    )
+                }
             </View>
+
 
             {displayedPokemon !== null && currentForm !== null ? (
                 <View style={styles.bottom_container}>
