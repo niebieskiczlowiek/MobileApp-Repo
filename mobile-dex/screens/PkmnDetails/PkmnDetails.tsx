@@ -14,21 +14,30 @@ import {getPokemonDetails, getPokemonSpeciesById, getPokemonById} from './pkmnde
 import PokemonFormInfo from '../../components/pokemonFormInfo/PokemonFormInfo'
 import PokemonFormSelect from '../../components/pokemonFormSelect/PokemonFormSelect'
 import PokemonSprite from '../../components/pokemonSprite/PokemonSprite'
+import PokemonNavigateButton from '../../components/pokemonNavigateButton/pokemonNavigateButton';
 
 type PkmnDetailsScreenProps = {
-    route: any;
+    route: any,
     navigation: any,
 }
 
-const PkmnDetails: React.FC<PkmnDetailsScreenProps> = ({ route }) => {
+type PokemonSpeciesSmall = {
+    name: string
+    pokemonNum: number
+}
+
+const PkmnDetails: React.FC<PkmnDetailsScreenProps> = (props) => {
+    const route = props.route
+    let { name, id } = route.params // name and Id of displayed species
+
+    const [currentPokemonName, setCurrentPokemonName] = React.useState<string>(name);
     const [displayedPokemon, setDisplayedPokemon] = React.useState<PokemonSpecies | null>(null) // current species
     const [currentForm, setCurrentForm] = React.useState<Pokemon | null> (null)
-    const [nextPokemon, setNextPokemon] = React.useState<string | null>(null) // next species in the dex
-    const [previousPokemon, setPreviousPokemon] = React.useState<string | null>(null) // previous species in the dex
 
+    const [nextPokemon, setNextPokemon] = React.useState<PokemonSpeciesSmall | null>(null) // next species in the dex
+
+    const [previousPokemon, setPreviousPokemon] = React.useState<PokemonSpeciesSmall | null>(null) // previous species in the dex
     const [formsModalVisible, setFormsModalVisible] = React.useState<boolean>(false);
-
-    const { name, id } = route.params // name and Id of displayed species
 
     const extractPokemonNumFromUrl = (url: string): number => {
         let pokemonNum: number = parseInt(url.split("/")[6]);
@@ -63,10 +72,12 @@ const PkmnDetails: React.FC<PkmnDetailsScreenProps> = ({ route }) => {
             if (!data) {
                 result = null
             } else {
-                result = data.names[6].name
+                result = {
+                    name: data.name,
+                    pokemonNum: data.pokedex_numbers[0].entry_number
+                }
             }
-
-            console.log(result, "<< next pokemon")
+            
             setNextPokemon(result)
         } catch (error) {
             throw error
@@ -80,10 +91,12 @@ const PkmnDetails: React.FC<PkmnDetailsScreenProps> = ({ route }) => {
             if (!data) {
                 result = null
             } else {
-                result = data.names[6].name
+                result = {
+                    name: data.name,
+                    pokemonNum: data.pokedex_numbers[0].entry_number
+                }
             }
 
-            console.log(result, "<< previous pokemon")
             setPreviousPokemon(result);
         } catch (error) {
             console.error(error)
@@ -91,8 +104,16 @@ const PkmnDetails: React.FC<PkmnDetailsScreenProps> = ({ route }) => {
         }
     }
 
+    const loadPreviousPokemon = (pokemon: PokemonSpeciesSmall) => {
+        console.log("ACTIVATED")
+        setCurrentPokemonName(name)
+        name = pokemon.name
+        id = pokemon.pokemonNum
+    }
+
     React.useEffect(() => {
-        displayedPokemonHandler(name)
+        console.log("COMPONENT RELOADED")
+        displayedPokemonHandler(currentPokemonName)
             .then((result) => {
                 currentFormHandler(result)
             })
@@ -101,7 +122,7 @@ const PkmnDetails: React.FC<PkmnDetailsScreenProps> = ({ route }) => {
             })
         getNextPokemon(id+1)
         getPreviousPokemon(id-1)
-    }, []);
+    }, [currentPokemonName]);
 
     return (
         <ScrollView>
@@ -162,18 +183,6 @@ const PkmnDetails: React.FC<PkmnDetailsScreenProps> = ({ route }) => {
                     
                     <Text>{displayedPokemon.pokedex_numbers[0].entry_number}</Text>
                     <Text>{ displayedPokemon.generation.url.split("/").reverse()[2] + displayedPokemon.generation.url.split("/").reverse()[1] }</Text>
-                    
-                    {previousPokemon !== null ? (
-                        <Text>previous {previousPokemon}</Text>
-                    ) : (
-                        <Text>previous ...</Text>
-                    )}
-
-                    {nextPokemon !== null ? (
-                        <Text>next {nextPokemon}</Text>
-                    ) : (
-                        <Text>next ...</Text>
-                    )}
 
                     <Pressable
                         style={styles.button}
@@ -184,6 +193,35 @@ const PkmnDetails: React.FC<PkmnDetailsScreenProps> = ({ route }) => {
                         <Text>Show forms</Text>
                     </Pressable>
 
+                    {previousPokemon !== null ? (
+                        <View>
+                            <Text>previous {previousPokemon.name}</Text>
+                            <PokemonNavigateButton 
+                                navigateTo={previousPokemon}
+                                currentName={currentPokemonName}
+                                pressFunction={() => {
+                                    // loadPreviousPokemon(previousPokemon.name)
+                                    loadPreviousPokemon(previousPokemon)
+                                }}
+                            />
+                        </View>
+                    ) : (
+                        <Text>previous ...</Text>
+                    )}
+
+                    {/* {nextPokemon !== null ? (
+                        <View>
+                            <Text>next {nextPokemon.name}</Text>
+                            <PokemonNavigateButton
+                                navigateTo={nextPokemon}
+                                pressFunction={() => {
+                                    navigateToPokemonScreen(nextPokemon.name, nextPokemon.pokemonNum)
+                                }}
+                            />
+                        </View>
+                    ) : (
+                        <Text>next ...</Text>
+                    )} */}
                 </View>
                 ) : (
                 <Text>Loading...</Text>

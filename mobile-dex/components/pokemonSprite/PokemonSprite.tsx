@@ -15,7 +15,7 @@ const PokemonSprite: React.FC<pokemonSpriteType> = (props) => {
     const [pokemonSprite, setPokemonSprite] = React.useState<string | null >()
     const [pokemonSpriteFlipped, setPokemonSpriteFlipped] = React.useState<boolean>(false);
 
-    const pokemonSpriteHandler = (pokemon: Pokemon) => {
+    const pokemonSpriteHandler = (pokemon: Pokemon): void => {
         let pokemonSprite: string | null;
         if (pokemonSpriteFlipped) {
             pokemonSprite = pokemon.sprites.back_default
@@ -23,10 +23,14 @@ const PokemonSprite: React.FC<pokemonSpriteType> = (props) => {
             pokemonSprite = pokemon.sprites.front_default
         }
 
+        if (pokemonSprite == null){
+            pokemonSprite = pokemon.sprites.front_default
+        }
+
         setPokemonSprite(pokemonSprite)
     }
 
-    const switchSpriteView = () => {
+    const switchSpriteView = (): void => {
         setPokemonSpriteFlipped(!pokemonSpriteFlipped)
     }
 
@@ -53,7 +57,7 @@ const PokemonSprite: React.FC<pokemonSpriteType> = (props) => {
                     </View>
                 )
                 : (
-                    <Text>Loading...</Text>
+                    <Text>No sprite available for this pokemon</Text>
                 )
             }
         </View>

@@ -7,13 +7,16 @@ import { NamedAPIResource } from 'pokenode-ts'
 // components
 import PkmnListBlock from '../../components/pokemonListBlock/PkmnListBlock';
 
+// types
+import PokemonSpecies from '../../types/pkmnspecies_type';
+
 type PkmnBrowseScreenPorps = {
     navigation: any,
 }
 
 const PkmnBrowse: React.FC<PkmnBrowseScreenPorps> = (props) => {
     const [pokemonList, setPokemonList] = React.useState<NamedAPIResource[]>([])
-
+    
     const navigation = props.navigation
 
     const pokemonListHandler = async (): Promise<void> => {
@@ -43,13 +46,6 @@ const PkmnBrowse: React.FC<PkmnBrowseScreenPorps> = (props) => {
         <ScrollView>
             {pokemonList.map((pokemon) => {
                 return (
-                    // <Pressable key={ extractPokemonNumFromUrl(pokemon.url) }
-                    //     onPress={() => {
-                    //         navigateToPokemonScreen(pokemon.name)
-                    //     }}
-                    // >
-                    //     <PkmnListBlock pkmnNum={extractPokemonNumFromUrl(pokemon.url)} pkmnName={pokemon.name} />
-                    // </Pressable>
                     <View key={ extractPokemonNumFromUrl(pokemon.url) }>
                         <PkmnListBlock 
                             pkmnNum={extractPokemonNumFromUrl(pokemon.url)}

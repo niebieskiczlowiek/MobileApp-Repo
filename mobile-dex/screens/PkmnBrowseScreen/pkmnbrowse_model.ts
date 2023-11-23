@@ -1,5 +1,6 @@
 import { NamedAPIResource, NamedAPIResourceList, PokemonClient } from 'pokenode-ts'
 
+
 const getPokemonList = async (): Promise<NamedAPIResource[]> => {
     const api = new PokemonClient()
 
