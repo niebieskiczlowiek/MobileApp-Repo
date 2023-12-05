@@ -29,8 +29,8 @@ type PokemonSpeciesSmall = {
 const PkmnDetails: React.FC<PkmnDetailsScreenProps> = (props) => {
     const route = props.route
     let { name, id } = route.params // name and Id of displayed species
+    const navigation = props.navigation
 
-    const [currentPokemonName, setCurrentPokemonName] = React.useState<string>(name);
     const [displayedPokemon, setDisplayedPokemon] = React.useState<PokemonSpecies | null>(null) // current species
     const [currentForm, setCurrentForm] = React.useState<Pokemon | null> (null)
 
@@ -40,7 +40,7 @@ const PkmnDetails: React.FC<PkmnDetailsScreenProps> = (props) => {
     const [formsModalVisible, setFormsModalVisible] = React.useState<boolean>(false);
 
     const extractPokemonNumFromUrl = (url: string): number => {
-        let pokemonNum: number = parseInt(url.split("/")[6]);
+        let pokemonNum: number = parseInt(url.split("/")[6])
         return pokemonNum
     }
 
@@ -105,15 +105,14 @@ const PkmnDetails: React.FC<PkmnDetailsScreenProps> = (props) => {
     }
 
     const loadPreviousPokemon = (pokemon: PokemonSpeciesSmall) => {
-        console.log("ACTIVATED")
-        setCurrentPokemonName(name)
-        name = pokemon.name
-        id = pokemon.pokemonNum
+        console.log(pokemon.name, pokemon.pokemonNum)
+        const name = pokemon.name
+        const id = pokemon.pokemonNum
+        navigation.replace('PokemonDetails', {name, id})
     }
 
     React.useEffect(() => {
-        console.log("COMPONENT RELOADED")
-        displayedPokemonHandler(currentPokemonName)
+        displayedPokemonHandler(name)
             .then((result) => {
                 currentFormHandler(result)
             })
@@ -122,7 +121,7 @@ const PkmnDetails: React.FC<PkmnDetailsScreenProps> = (props) => {
             })
         getNextPokemon(id+1)
         getPreviousPokemon(id-1)
-    }, [currentPokemonName]);
+    }, []);
 
     return (
         <ScrollView>
@@ -198,9 +197,8 @@ const PkmnDetails: React.FC<PkmnDetailsScreenProps> = (props) => {
                             <Text>previous {previousPokemon.name}</Text>
                             <PokemonNavigateButton 
                                 navigateTo={previousPokemon}
-                                currentName={currentPokemonName}
+                                currentName={name}
                                 pressFunction={() => {
-                                    // loadPreviousPokemon(previousPokemon.name)
                                     loadPreviousPokemon(previousPokemon)
                                 }}
                             />
@@ -209,19 +207,21 @@ const PkmnDetails: React.FC<PkmnDetailsScreenProps> = (props) => {
                         <Text>previous ...</Text>
                     )}
 
-                    {/* {nextPokemon !== null ? (
+                    {nextPokemon !== null ? (
                         <View>
                             <Text>next {nextPokemon.name}</Text>
-                            <PokemonNavigateButton
+                            <PokemonNavigateButton 
                                 navigateTo={nextPokemon}
+                                currentName={name}
+
                                 pressFunction={() => {
-                                    navigateToPokemonScreen(nextPokemon.name, nextPokemon.pokemonNum)
+                                    loadPreviousPokemon(nextPokemon)
                                 }}
                             />
                         </View>
                     ) : (
                         <Text>next ...</Text>
-                    )} */}
+                    )}
                 </View>
                 ) : (
                 <Text>Loading...</Text>
