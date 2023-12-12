@@ -14,8 +14,6 @@ const PokemonFormInfo: React.FC<pokemonFormInfoType> = (props) => {
 
     return (
         <View>
-
-            <Text>POKEMON FORM COMPONENT</Text>
             <Text>
                 { pokemonForm.name }
             </Text>

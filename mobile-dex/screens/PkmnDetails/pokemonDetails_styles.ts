@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
         borderTopStartRadius: 20,
         marginTop: -20,
         padding: 20,
-        minHeight: 438
+        minHeight: 526
       },
     title: {
       marginTop: 16,
