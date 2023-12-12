@@ -11,3 +11,5 @@ The user can also explore information about the regions and types themselves, di
 +npm i @react-navigation/native
 +npm i @react-navigation/native-stack
 +npm install react-native-navigation << to jest chyba dobre xD
+
+npx expo start --tunnel / npx expo start

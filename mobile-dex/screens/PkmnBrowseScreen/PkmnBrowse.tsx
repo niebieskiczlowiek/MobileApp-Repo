@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Text, View, ScrollView } from 'react-native'
+import { Text, View, ScrollView, Pressable, GestureResponderEvent } from 'react-native'
 
 import getPokemonList from './pkmnbrowse_model'
 import { NamedAPIResource } from 'pokenode-ts'
@@ -7,13 +7,21 @@ import { NamedAPIResource } from 'pokenode-ts'
 // components
 import PkmnListBlock from '../../components/pokemonListBlock/PkmnListBlock';
 
-const PkmnBrowse: React.FC = () => {
+// types
+import PokemonSpecies from '../../types/pkmnspecies_type';
+
+type PkmnBrowseScreenPorps = {
+    navigation: any,
+}
+
+const PkmnBrowse: React.FC<PkmnBrowseScreenPorps> = (props) => {
     const [pokemonList, setPokemonList] = React.useState<NamedAPIResource[]>([])
+    
+    const navigation = props.navigation
 
     const pokemonListHandler = async (): Promise<void> => {
         try {
             const data = await getPokemonList()
-            console.log("data type", data)
             setPokemonList(data)
         } catch (error) {
             console.error(error)
@@ -26,6 +34,10 @@ const PkmnBrowse: React.FC = () => {
         return pokemonNum
     }
 
+    const navigateToPokemonScreen = (name: string, id: number): void => {
+        navigation.navigate('PokemonDetails', { name, id })
+    }
+
     React.useEffect(() => {
         pokemonListHandler()
     }, []);
@@ -35,7 +47,14 @@ const PkmnBrowse: React.FC = () => {
             {pokemonList.map((pokemon) => {
                 return (
                     <View key={ extractPokemonNumFromUrl(pokemon.url) }>
-                        <PkmnListBlock pkmnNum={extractPokemonNumFromUrl(pokemon.url)} pkmnName={pokemon.name} />
+                        <PkmnListBlock 
+                            pkmnNum={extractPokemonNumFromUrl(pokemon.url)}
+                            pkmnName={pokemon.name}
+
+                            pressFunction={() => {
+                                navigateToPokemonScreen(pokemon.name, extractPokemonNumFromUrl(pokemon.url))
+                            }}
+                        />
                     </View>
                 )
             })}
