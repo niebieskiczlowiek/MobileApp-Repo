@@ -3,13 +3,13 @@ import { Text, View, Pressable } from 'react-native';
 
 // type
 import Pokemon from '../../types/pokemon_type';
-import PokemonSpecies from '../../types/pkmnspecies_type'
+import PokemonSpecies from '../../types/pokemonspecies_type'
 
 // styles
 import styles from './pokemonFormSelect_styles'
 
 // model
-import { getPokemonById } from '../../screens/PkmnDetails/pkmndetails_model';
+import { getPokemonById } from '../../screens/PokemonDetails/pokemondetails_model';
 
 type pokemonFormSelect = {
     displayedPokemonSpecies: PokemonSpecies, // the species that the component will list forms for

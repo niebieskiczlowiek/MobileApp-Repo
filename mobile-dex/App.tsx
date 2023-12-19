@@ -5,8 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 // components
-import PkmnBrowse from './screens/PkmnBrowseScreen/PkmnBrowse';
-import PkmnDetails from './screens/PkmnDetails/PkmnDetails';
+import PokemonBrowse from './screens/PokemonBrowseScreen/PokemonBrowse';
+import PokemonDetails from './screens/PokemonDetails/PokemonDetails';
 
 const Stack = createStackNavigator();
 
@@ -16,7 +16,7 @@ const App: React.FC = () => {
       <Stack.Navigator>
         <Stack.Screen 
           name="PokemonList" 
-          component={PkmnBrowse} 
+          component={PokemonBrowse} 
           initialParams={{}}
           options={{
             headerShown: false,
@@ -24,7 +24,7 @@ const App: React.FC = () => {
           />
         <Stack.Screen 
           name="PokemonDetails" 
-          component={PkmnDetails}  
+          component={PokemonDetails}  
           initialParams={{}} 
           options={{
             animationEnabled: false,

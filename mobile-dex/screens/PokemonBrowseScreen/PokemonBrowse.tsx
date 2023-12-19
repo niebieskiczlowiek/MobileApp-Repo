@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Text, View, ScrollView, Pressable, GestureResponderEvent, ScrollViewProps } from 'react-native'
 
-import getPokemonList from './pkmnbrowse_model'
+import getPokemonList from './pokemonbrowse_model'
 import { NamedAPIResource } from 'pokenode-ts'
 
 // components
@@ -9,16 +9,16 @@ import PkmnListBlock from '../../components/pokemonListBlock/PkmnListBlock';
 import PokemonListNavigate from '../../components/pokemonListNavigate/PokemonListNavigate';
 
 // types
-import PokemonSpecies from '../../types/pkmnspecies_type';
+import PokemonSpecies from '../../types/pokemonspecies_type';
 
 // styles
-import styles from './pkmnbrowse_styles';
+import styles from './pokemonbrowse_styles';
 
-type PkmnBrowseScreenPorps = {
+type PokemonBrowseScreenPorps = {
     navigation: any,
 }
 
-const PkmnBrowse: React.FC<PkmnBrowseScreenPorps> = (props) => {
+const PokemonBrowse: React.FC<PokemonBrowseScreenPorps> = (props) => {
     const [pokemonList, setPokemonList] = React.useState<NamedAPIResource[]>([]);
     const [currentPageNumber, setCurrentPageNumber] = React.useState<number>(0);
     
@@ -109,4 +109,4 @@ const PkmnBrowse: React.FC<PkmnBrowseScreenPorps> = (props) => {
     )
 }
 
-export default PkmnBrowse;
+export default PokemonBrowse;

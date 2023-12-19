@@ -1,6 +1,6 @@
 import { NamedAPIResource, NamedAPIResourceList, PokemonClient } from 'pokenode-ts'
 
-import PokemonSpecies from '../../types/pkmnspecies_type'
+import PokemonSpecies from '../../types/pokemonspecies_type'
 import Pokemon from '../../types/pokemon_type'
 
 

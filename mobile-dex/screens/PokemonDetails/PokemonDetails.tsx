@@ -4,11 +4,11 @@ import {View, Text, ScrollView, Pressable, Modal } from 'react-native'
 import styles from './pokemonDetails_styles'
 
 // types
-import PokemonSpecies from '../../types/pkmnspecies_type';
+import PokemonSpecies from '../../types/pokemonspecies_type';
 import Pokemon from '../../types/pokemon_type'
 
 // model 
-import {getPokemonDetails, getPokemonSpeciesById, getPokemonById} from './pkmndetails_model'
+import {getPokemonDetails, getPokemonSpeciesById, getPokemonById} from './pokemondetails_model'
 
 // components
 import PokemonFormInfo from '../../components/pokemonFormInfo/PokemonFormInfo'
@@ -16,7 +16,7 @@ import PokemonFormSelect from '../../components/pokemonFormSelect/PokemonFormSel
 import PokemonSprite from '../../components/pokemonSprite/PokemonSprite'
 import PokemonNavigateButton from '../../components/pokemonNavigateButton/pokemonNavigateButton';
 
-type PkmnDetailsScreenProps = {
+type PokemonDetailsScreenProps = {
     route: any,
     navigation: any,
 }
@@ -26,7 +26,7 @@ type PokemonSpeciesSmall = {
     pokemonNum: number
 }
 
-const PkmnDetails: React.FC<PkmnDetailsScreenProps> = (props) => {
+const PokemonDetails: React.FC<PokemonDetailsScreenProps> = (props) => {
     const route = props.route
     let { name, id } = route.params // name and Id of displayed species
     const navigation = props.navigation
@@ -230,4 +230,4 @@ const PkmnDetails: React.FC<PkmnDetailsScreenProps> = (props) => {
     )
 }
 
-export default PkmnDetails;
+export default PokemonDetails;
