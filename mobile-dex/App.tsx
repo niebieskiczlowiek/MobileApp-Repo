@@ -15,7 +15,7 @@ const App: React.FC = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen 
-          name="PokemonList" 
+          name="PokemonList"
           component={PokemonBrowse} 
           initialParams={{}}
           options={{
