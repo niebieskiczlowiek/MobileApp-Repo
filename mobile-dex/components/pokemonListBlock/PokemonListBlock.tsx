@@ -9,13 +9,13 @@ import {styles, blockStyles} from './styles';
 // type colors object
 import { type_colors } from '../../assets/types_colors';
 
-type pkmnListBlockType = {
+type pokemonListBlockType = {
     pkmnNum: number,
     pkmnName: string,
     pressFunction: () => void,
 }
 
-const PkmnListBlock: React.FC<pkmnListBlockType> = (props) => {
+const PokemonListBlock: React.FC<pokemonListBlockType> = (props) => {
     const [pokemonNum, setPokemonNum] = React.useState<number | null>();
     const [pokemonName, setPokemonName] = React.useState<string>();
     const [pokemonSprite, setPokemonSprite] = React.useState<string | null>();
@@ -83,4 +83,4 @@ const PkmnListBlock: React.FC<pkmnListBlockType> = (props) => {
     )
 }
 
-export default PkmnListBlock;
+export default PokemonListBlock;

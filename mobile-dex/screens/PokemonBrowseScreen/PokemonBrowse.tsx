@@ -5,7 +5,7 @@ import getPokemonList from './pokemonbrowse_model'
 import { NamedAPIResource } from 'pokenode-ts'
 
 // components
-import PkmnListBlock from '../../components/pokemonListBlock/PkmnListBlock';
+import PokemonListBlock from '../../components/pokemonListBlock/PokemonListBlock'
 import PokemonListNavigate from '../../components/pokemonListNavigate/PokemonListNavigate';
 
 // types
@@ -79,7 +79,7 @@ const PokemonBrowse: React.FC<PokemonBrowseScreenPorps> = (props) => {
                     {pokemonList.map((pokemon) => {
                         return (
                             <View key={ extractPokemonNumFromUrl(pokemon.url) }>
-                                <PkmnListBlock 
+                                <PokemonListBlock
                                     pkmnNum={extractPokemonNumFromUrl(pokemon.url)}
                                     pkmnName={pokemon.name}
 
