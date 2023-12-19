@@ -14,7 +14,14 @@ const App: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="PokemonList" component={PkmnBrowse} initialParams={{}} />
+        <Stack.Screen 
+          name="PokemonList" 
+          component={PkmnBrowse} 
+          initialParams={{}}
+          options={{
+            headerShown: false,
+          }} 
+          />
         <Stack.Screen 
           name="PokemonDetails" 
           component={PkmnDetails}  
